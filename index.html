@@ -2,13 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Is Mark Zuckerberg going to run for president?</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.0/css/bulma.min.css">
     <style>
-   
-h1.subtitle {font-size: 8em;font-weight: 100;}
+   html, body {overflow:none;}
 #giphyme{
  position:fixed;width:100vw;height:100vh;z-index:1;   
 }
@@ -16,24 +15,65 @@ h1.subtitle {font-size: 8em;font-weight: 100;}
  background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-blend-mode: darken;
-    width:100vw;height:100vh;
+    background-blend-mode: hard-light;
+    width:100vw;height:100vh;opacity:.6
     
 }
-.headertxt {font-weight:700;opacity:.8;}
+.zuckwrap {width:60vw;}
+#zuck {display: inline-block;
+  white-space: nowrap;font-size: 8em;font-weight: 100;text-shadow: 1px 1px 6px rgba(0,0,0,.3);}
+.headertxt {font-weight:700;opacity:.6;margin:3vw;}
 .hero-head, .hero-body, .hero-foot {z-index:2;}
-.giphylogo {width:140px;height:auto;}
+.giphylogo {width:140px;height:auto;margin:3vw;}
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fade-in.one {
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+.fade-in.two {
+  -webkit-animation-delay: 1.2s;
+  -moz-animation-delay:1.2s;
+  animation-delay: 1.2s;
+}
+
+.fade-in.three {
+  -webkit-animation-delay: 1.6s;
+  -moz-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
+canvas {z-index:2;opacity:.15;position:absolute; left:0;top:0;width:100vw;height:100vh;}
     </style>
   </head>
   <body>
-  <section class="hero is-info is-fullheight">
-  <span id = "giphyme"></span>
+  <canvas id="world"></canvas>
+  <section class="hero is-dark is-fullheight">
+  <span class="fade-in one" id = "giphyme"></span>
   <!-- Hero header: will stick at the top -->
   <div class="hero-head">
    
       <div class="container is-fluid has-text-centered">
-         <div class="content headertxt">
-                   <BR>Is Mark Zuckerberg going to run for president?
+         <div class="content headertxt fade-in two is-small">
+                  Is Mark Zuckerberg going to run for president?
 
         </div>
        
@@ -42,10 +82,10 @@ h1.subtitle {font-size: 8em;font-weight: 100;}
 
   <!-- Hero content: will be in the middle -->
   <div class="hero-body">
-    <div class="container is-fluid has-text-centered">
-      <h1 class="subtitle" id="zuck">
+    <div class="container fade-in three zuckwrap">
+      <div class="subtitle has-text-centered" id="zuck">
         NOT YET
-      </h1>
+      </div>
       <h2 class="subtitle">
       </h2>
     </div>
@@ -55,7 +95,7 @@ h1.subtitle {font-size: 8em;font-weight: 100;}
   <div class="hero-foot">
     
       <div class="container is-fluid is-pulled-right">
-        <IMG SRC="PoweredBy_Horizontal_Dark-Backgrounds_With-Logo.gif" CLASS="giphylogo">
+        <IMG SRC="PoweredBy_Horizontal_Dark-Backgrounds_With-Logo.gif" CLASS="giphylogo fade-in three">
       </div>
   </div>
 </section>
@@ -63,6 +103,52 @@ h1.subtitle {font-size: 8em;font-weight: 100;}
 <script src="fitty.min.js"></script>
 <script>
 fitty('#zuck');
+var world = document.getElementById('world');
+var world_cx = world.getContext('2d');
+var world_w, world_h;
+
+var display = document.getElementById('display');
+var rgb = document.getElementById('rgb');
+var interlace = document.getElementById('interlace');
+
+var cv = document.createElement('canvas');
+var cx = cv.getContext('2d');
+var cw = cv.width = 100;
+var ch = cv.height = 100;
+var dt = cx.createImageData(cw, ch);
+var dd = dt.data, dl = dt.width * dt.height;
+
+function generateNoise() {
+  var p = 0, i = 0;
+  for (; i < dl; ++i) {
+    dd[p++] = c = Math.floor(Math.random() * 256);
+    dd[p++] = c;
+    dd[p++] = c;
+    dd[p++] = 255;
+  }
+  cx.putImageData(dt, 0, 0);
+}
+
+function resize() {
+  var w = window.innerWidth;
+  var h = window.innerHeight;
+  world_w = world.width = w >> 1;
+  world_h = world.height = h >> 1;
+  world.style.width = w + 'px';
+  world.style.height = h + 'px'; 
+}
+
+resize();
+window.addEventListener('resize', resize, false);
+window.addEventListener('load', function() {
+  var s = +new Date;
+  generateNoise();
+  world_cx.fillStyle = world_cx.createPattern(cv, 'repeat');
+  world_cx.fillRect(0, 0, world_w, world_h);
+  setTimeout(arguments.callee, 20);
+}, false);
+
 </script>
+
   </body>
 </html>

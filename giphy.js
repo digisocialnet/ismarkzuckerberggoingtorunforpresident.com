@@ -7,7 +7,7 @@
 // 2014 - Neal Shyam [@nealrs | nealshyam.com]
 
 document.addEventListener('DOMContentLoaded', function () {
-	q = "mark zuckerberg"; // search query
+	q = "mark zuckerberg speech"; // search query
 	
 	request = new XMLHttpRequest;
 	request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=2efbb11186e743e3b143c01474f6d52d&tag='+q, true);
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			datawidth = JSON.parse(request.responseText).data.image_width;
 			dataheight = JSON.parse(request.responseText).data.image_height;
 			console.log(data);
-			document.getElementById("giphyme").innerHTML = '<div style = "background: linear-gradient(146deg, rgba(116, 235, 213, 1) 0%, rgba(159, 172, 230, 1) 100%),url('+data+') left top / cover no-repeat;"  ></div>';
+			document.getElementById("giphyme").innerHTML = '<div style = "background: linear-gradient(146deg, rgba(116, 235, 213, 1) 0%, rgba(159, 172, 230, 1) 100%),url('+data+') center / cover no-repeat;"  ></div>';
 		
 		} else {
 			console.log('reached giphy, but API returned an error');
