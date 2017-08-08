@@ -3,40 +3,50 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Is Mark Zuckerberg going to run for president?</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.0/css/bulma.min.css">
     <style>
-    .hero background {background-color: #74EBD5;
-background-image: linear-gradient(146deg, #74EBD5 0%, #9FACE6 100%);
+   
+h1.subtitle {font-size: 8em;font-weight: 100;}
+#giphyme{
+ position:fixed;width:100vw;height:100vh;z-index:1;   
 }
+#giphyme div{
+ background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: darken;
+    width:100vw;height:100vh;
+    
+}
+.headertxt {font-weight:700;opacity:.8;}
+.hero-head, .hero-body, .hero-foot {z-index:2;}
+.giphylogo {width:140px;height:auto;}
     </style>
   </head>
   <body>
-  <section class="hero is-info is-large">
+  <section class="hero is-info is-fullheight">
+  <span id = "giphyme"></span>
   <!-- Hero header: will stick at the top -->
   <div class="hero-head">
-    <header class="nav">
-      <div class="container">
-        <div class="nav-left">
-          <a class="nav-item">
-           
-          </a>
+   
+      <div class="container is-fluid has-text-centered">
+         <div class="content headertxt">
+                   <BR>Is Mark Zuckerberg going to run for president?
+
         </div>
        
         </div>
       </div>
-    </header>
-  </div>
 
   <!-- Hero content: will be in the middle -->
   <div class="hero-body">
-    <div class="container has-text-centered">
-      <h1 class="title">
+    <div class="container is-fluid has-text-centered">
+      <h1 class="subtitle" id="zuck">
         NOT YET
       </h1>
       <h2 class="subtitle">
-        Is Mark Zuckerberg going to run for president?
       </h2>
     </div>
   </div>
@@ -44,10 +54,15 @@ background-image: linear-gradient(146deg, #74EBD5 0%, #9FACE6 100%);
   <!-- Hero footer: will stick at the bottom -->
   <div class="hero-foot">
     
-      <div class="container">
-        
+      <div class="container is-fluid is-pulled-right">
+        <IMG SRC="PoweredBy_Horizontal_Dark-Backgrounds_With-Logo.gif" CLASS="giphylogo">
       </div>
   </div>
 </section>
+<script src="giphy.js"></script>
+<script src="fitty.min.js"></script>
+<script>
+fitty('#zuck');
+</script>
   </body>
 </html>
